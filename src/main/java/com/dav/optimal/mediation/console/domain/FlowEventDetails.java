@@ -34,10 +34,6 @@ public class FlowEventDetails implements Serializable {
     private String eventName;
 
     @NotNull
-    @Column(name = "flow_id", nullable = false)
-    private UUID flowId;
-
-    @NotNull
     @Column(name = "transaction_date", nullable = false)
     private Instant transactionDate;
 
@@ -103,19 +99,6 @@ public class FlowEventDetails implements Serializable {
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
-    }
-
-    public UUID getFlowId() {
-        return flowId;
-    }
-
-    public FlowEventDetails flowId(UUID flowId) {
-        this.flowId = flowId;
-        return this;
-    }
-
-    public void setFlowId(UUID flowId) {
-        this.flowId = flowId;
     }
 
     public Instant getTransactionDate() {
@@ -232,7 +215,6 @@ public class FlowEventDetails implements Serializable {
             "id=" + getId() +
             ", eventId='" + getEventId() + "'" +
             ", eventName='" + getEventName() + "'" +
-            ", flowId='" + getFlowId() + "'" +
             ", transactionDate='" + getTransactionDate() + "'" +
             ", parameters='" + getParameters() + "'" +
             ", status='" + getStatus() + "'" +

@@ -72,8 +72,6 @@ class MediationUserRoleMappingsGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "id":null
-                , "mediationUserId":null
-                , "mediationRoleId":null
                 , "createdBy":"SAMPLE_TEXT"
                 , "createdDate":"2020-01-01T00:00:00.000Z"
                 , "modifiedBy":"SAMPLE_TEXT"

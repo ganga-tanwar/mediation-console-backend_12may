@@ -74,7 +74,6 @@ class FlowEventDetailsGatlingTest extends Simulation {
                 "id":null
                 , "eventId":null
                 , "eventName":"SAMPLE_TEXT"
-                , "flowId":null
                 , "transactionDate":"2020-01-01T00:00:00.000Z"
                 , "parameters":"SAMPLE_TEXT"
                 , "status":"SAMPLE_TEXT"

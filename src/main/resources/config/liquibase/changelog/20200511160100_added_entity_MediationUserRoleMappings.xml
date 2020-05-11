@@ -15,12 +15,6 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="mediation_user_id" type="${uuidType}">
-                <constraints nullable="false" />
-            </column>
-            <column name="mediation_role_id" type="${uuidType}">
-                <constraints nullable="false" />
-            </column>
             <column name="created_by" type="varchar(100)">
                 <constraints nullable="false" />
             </column>
@@ -64,8 +58,6 @@
                   separator=";"
                   tableName="mediation_user_role_mappings">
             <column name="id" type="numeric"/>
-            <column name="mediation_user_id" type="${uuidType}"/>
-            <column name="mediation_role_id" type="${uuidType}"/>
             <column name="created_by" type="string"/>
             <column name="created_date" type="datetime"/>
             <column name="modified_by" type="string"/>

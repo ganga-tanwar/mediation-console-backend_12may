@@ -22,7 +22,6 @@ import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -37,12 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @WithMockUser
 public class MediationUserRoleMappingsResourceIT {
-
-    private static final UUID DEFAULT_MEDIATION_USER_ID = UUID.randomUUID();
-    private static final UUID UPDATED_MEDIATION_USER_ID = UUID.randomUUID();
-
-    private static final UUID DEFAULT_MEDIATION_ROLE_ID = UUID.randomUUID();
-    private static final UUID UPDATED_MEDIATION_ROLE_ID = UUID.randomUUID();
 
     private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
@@ -81,8 +74,6 @@ public class MediationUserRoleMappingsResourceIT {
      */
     public static MediationUserRoleMappings createEntity(EntityManager em) {
         MediationUserRoleMappings mediationUserRoleMappings = new MediationUserRoleMappings()
-            .mediationUserId(DEFAULT_MEDIATION_USER_ID)
-            .mediationRoleId(DEFAULT_MEDIATION_ROLE_ID)
             .createdBy(DEFAULT_CREATED_BY)
             .createdDate(DEFAULT_CREATED_DATE)
             .modifiedBy(DEFAULT_MODIFIED_BY)
@@ -117,8 +108,6 @@ public class MediationUserRoleMappingsResourceIT {
      */
     public static MediationUserRoleMappings createUpdatedEntity(EntityManager em) {
         MediationUserRoleMappings mediationUserRoleMappings = new MediationUserRoleMappings()
-            .mediationUserId(UPDATED_MEDIATION_USER_ID)
-            .mediationRoleId(UPDATED_MEDIATION_ROLE_ID)
             .createdBy(UPDATED_CREATED_BY)
             .createdDate(UPDATED_CREATED_DATE)
             .modifiedBy(UPDATED_MODIFIED_BY)
@@ -167,8 +156,6 @@ public class MediationUserRoleMappingsResourceIT {
         List<MediationUserRoleMappings> mediationUserRoleMappingsList = mediationUserRoleMappingsRepository.findAll();
         assertThat(mediationUserRoleMappingsList).hasSize(databaseSizeBeforeCreate + 1);
         MediationUserRoleMappings testMediationUserRoleMappings = mediationUserRoleMappingsList.get(mediationUserRoleMappingsList.size() - 1);
-        assertThat(testMediationUserRoleMappings.getMediationUserId()).isEqualTo(DEFAULT_MEDIATION_USER_ID);
-        assertThat(testMediationUserRoleMappings.getMediationRoleId()).isEqualTo(DEFAULT_MEDIATION_ROLE_ID);
         assertThat(testMediationUserRoleMappings.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
         assertThat(testMediationUserRoleMappings.getCreatedDate()).isEqualTo(DEFAULT_CREATED_DATE);
         assertThat(testMediationUserRoleMappings.getModifiedBy()).isEqualTo(DEFAULT_MODIFIED_BY);
@@ -195,44 +182,6 @@ public class MediationUserRoleMappingsResourceIT {
         assertThat(mediationUserRoleMappingsList).hasSize(databaseSizeBeforeCreate);
     }
 
-
-    @Test
-    @Transactional
-    public void checkMediationUserIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = mediationUserRoleMappingsRepository.findAll().size();
-        // set the field null
-        mediationUserRoleMappings.setMediationUserId(null);
-
-        // Create the MediationUserRoleMappings, which fails.
-        MediationUserRoleMappingsDTO mediationUserRoleMappingsDTO = mediationUserRoleMappingsMapper.toDto(mediationUserRoleMappings);
-
-        restMediationUserRoleMappingsMockMvc.perform(post("/api/mediation-user-role-mappings")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(mediationUserRoleMappingsDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<MediationUserRoleMappings> mediationUserRoleMappingsList = mediationUserRoleMappingsRepository.findAll();
-        assertThat(mediationUserRoleMappingsList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkMediationRoleIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = mediationUserRoleMappingsRepository.findAll().size();
-        // set the field null
-        mediationUserRoleMappings.setMediationRoleId(null);
-
-        // Create the MediationUserRoleMappings, which fails.
-        MediationUserRoleMappingsDTO mediationUserRoleMappingsDTO = mediationUserRoleMappingsMapper.toDto(mediationUserRoleMappings);
-
-        restMediationUserRoleMappingsMockMvc.perform(post("/api/mediation-user-role-mappings")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(mediationUserRoleMappingsDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<MediationUserRoleMappings> mediationUserRoleMappingsList = mediationUserRoleMappingsRepository.findAll();
-        assertThat(mediationUserRoleMappingsList).hasSize(databaseSizeBeforeTest);
-    }
 
     @Test
     @Transactional
@@ -283,8 +232,6 @@ public class MediationUserRoleMappingsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(mediationUserRoleMappings.getId().intValue())))
-            .andExpect(jsonPath("$.[*].mediationUserId").value(hasItem(DEFAULT_MEDIATION_USER_ID.toString())))
-            .andExpect(jsonPath("$.[*].mediationRoleId").value(hasItem(DEFAULT_MEDIATION_ROLE_ID.toString())))
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
             .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
             .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY)))
@@ -302,8 +249,6 @@ public class MediationUserRoleMappingsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(mediationUserRoleMappings.getId().intValue()))
-            .andExpect(jsonPath("$.mediationUserId").value(DEFAULT_MEDIATION_USER_ID.toString()))
-            .andExpect(jsonPath("$.mediationRoleId").value(DEFAULT_MEDIATION_ROLE_ID.toString()))
             .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY))
             .andExpect(jsonPath("$.createdDate").value(DEFAULT_CREATED_DATE.toString()))
             .andExpect(jsonPath("$.modifiedBy").value(DEFAULT_MODIFIED_BY))
@@ -331,8 +276,6 @@ public class MediationUserRoleMappingsResourceIT {
         // Disconnect from session so that the updates on updatedMediationUserRoleMappings are not directly saved in db
         em.detach(updatedMediationUserRoleMappings);
         updatedMediationUserRoleMappings
-            .mediationUserId(UPDATED_MEDIATION_USER_ID)
-            .mediationRoleId(UPDATED_MEDIATION_ROLE_ID)
             .createdBy(UPDATED_CREATED_BY)
             .createdDate(UPDATED_CREATED_DATE)
             .modifiedBy(UPDATED_MODIFIED_BY)
@@ -348,8 +291,6 @@ public class MediationUserRoleMappingsResourceIT {
         List<MediationUserRoleMappings> mediationUserRoleMappingsList = mediationUserRoleMappingsRepository.findAll();
         assertThat(mediationUserRoleMappingsList).hasSize(databaseSizeBeforeUpdate);
         MediationUserRoleMappings testMediationUserRoleMappings = mediationUserRoleMappingsList.get(mediationUserRoleMappingsList.size() - 1);
-        assertThat(testMediationUserRoleMappings.getMediationUserId()).isEqualTo(UPDATED_MEDIATION_USER_ID);
-        assertThat(testMediationUserRoleMappings.getMediationRoleId()).isEqualTo(UPDATED_MEDIATION_ROLE_ID);
         assertThat(testMediationUserRoleMappings.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
         assertThat(testMediationUserRoleMappings.getCreatedDate()).isEqualTo(UPDATED_CREATED_DATE);
         assertThat(testMediationUserRoleMappings.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);
