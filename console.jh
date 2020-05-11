@@ -27,8 +27,6 @@ entity MediationRoles {
 /** Class representing Roles */
 entity MediationUserRoleMappings {
 	id UUID required,
-	mediationUserId UUID required,
-	mediationRoleId UUID required,
 	createdBy String required maxlength(LONG_STRING_MAX_LENGTH),
 	createdDate Instant required,
 	modifiedBy String maxlength(LONG_STRING_MAX_LENGTH),
@@ -57,7 +55,6 @@ entity FlowDetails {
 entity FlowEventDetails {
     eventId UUID required,
 	eventName String required maxlength(LONG_STRING_MAX_LENGTH),
-	flowId UUID required,	
 	transactionDate Instant required,
 	parameters String required maxlength(LONG_STRING_MAX_LENGTH),
 	status String required maxlength(LONG_STRING_MAX_LENGTH),
