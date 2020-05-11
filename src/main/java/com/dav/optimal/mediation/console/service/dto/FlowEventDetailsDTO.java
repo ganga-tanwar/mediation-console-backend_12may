@@ -23,9 +23,6 @@ public class FlowEventDetailsDTO implements Serializable {
     private String eventName;
 
     @NotNull
-    private UUID flowId;
-
-    @NotNull
     private Instant transactionDate;
 
     @NotNull
@@ -72,14 +69,6 @@ public class FlowEventDetailsDTO implements Serializable {
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
-    }
-
-    public UUID getFlowId() {
-        return flowId;
-    }
-
-    public void setFlowId(UUID flowId) {
-        this.flowId = flowId;
     }
 
     public Instant getTransactionDate() {
@@ -165,7 +154,6 @@ public class FlowEventDetailsDTO implements Serializable {
             "id=" + getId() +
             ", eventId='" + getEventId() + "'" +
             ", eventName='" + getEventName() + "'" +
-            ", flowId='" + getFlowId() + "'" +
             ", transactionDate='" + getTransactionDate() + "'" +
             ", parameters='" + getParameters() + "'" +
             ", status='" + getStatus() + "'" +

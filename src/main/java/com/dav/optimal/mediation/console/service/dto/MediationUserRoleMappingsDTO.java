@@ -5,7 +5,6 @@ import java.time.Instant;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * A DTO for the {@link com.dav.optimal.mediation.console.domain.MediationUserRoleMappings} entity.
@@ -14,12 +13,6 @@ import java.util.UUID;
 public class MediationUserRoleMappingsDTO implements Serializable {
     
     private Long id;
-
-    @NotNull
-    private UUID mediationUserId;
-
-    @NotNull
-    private UUID mediationRoleId;
 
     @NotNull
     @Size(max = 100)
@@ -44,22 +37,6 @@ public class MediationUserRoleMappingsDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public UUID getMediationUserId() {
-        return mediationUserId;
-    }
-
-    public void setMediationUserId(UUID mediationUserId) {
-        this.mediationUserId = mediationUserId;
-    }
-
-    public UUID getMediationRoleId() {
-        return mediationRoleId;
-    }
-
-    public void setMediationRoleId(UUID mediationRoleId) {
-        this.mediationRoleId = mediationRoleId;
     }
 
     public String getCreatedBy() {
@@ -135,8 +112,6 @@ public class MediationUserRoleMappingsDTO implements Serializable {
     public String toString() {
         return "MediationUserRoleMappingsDTO{" +
             "id=" + getId() +
-            ", mediationUserId='" + getMediationUserId() + "'" +
-            ", mediationRoleId='" + getMediationRoleId() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", modifiedBy='" + getModifiedBy() + "'" +

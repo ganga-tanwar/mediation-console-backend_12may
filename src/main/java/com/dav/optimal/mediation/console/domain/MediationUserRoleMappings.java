@@ -8,7 +8,6 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import java.time.Instant;
-import java.util.UUID;
 
 /**
  * Class representing Roles
@@ -23,14 +22,6 @@ public class MediationUserRoleMappings implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
-
-    @NotNull
-    @Column(name = "mediation_user_id", nullable = false)
-    private UUID mediationUserId;
-
-    @NotNull
-    @Column(name = "mediation_role_id", nullable = false)
-    private UUID mediationRoleId;
 
     @NotNull
     @Size(max = 100)
@@ -65,32 +56,6 @@ public class MediationUserRoleMappings implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public UUID getMediationUserId() {
-        return mediationUserId;
-    }
-
-    public MediationUserRoleMappings mediationUserId(UUID mediationUserId) {
-        this.mediationUserId = mediationUserId;
-        return this;
-    }
-
-    public void setMediationUserId(UUID mediationUserId) {
-        this.mediationUserId = mediationUserId;
-    }
-
-    public UUID getMediationRoleId() {
-        return mediationRoleId;
-    }
-
-    public MediationUserRoleMappings mediationRoleId(UUID mediationRoleId) {
-        this.mediationRoleId = mediationRoleId;
-        return this;
-    }
-
-    public void setMediationRoleId(UUID mediationRoleId) {
-        this.mediationRoleId = mediationRoleId;
     }
 
     public String getCreatedBy() {
@@ -192,8 +157,6 @@ public class MediationUserRoleMappings implements Serializable {
     public String toString() {
         return "MediationUserRoleMappings{" +
             "id=" + getId() +
-            ", mediationUserId='" + getMediationUserId() + "'" +
-            ", mediationRoleId='" + getMediationRoleId() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", modifiedBy='" + getModifiedBy() + "'" +

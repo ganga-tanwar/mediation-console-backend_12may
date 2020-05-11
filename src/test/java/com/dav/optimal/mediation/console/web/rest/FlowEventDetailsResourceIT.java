@@ -43,9 +43,6 @@ public class FlowEventDetailsResourceIT {
     private static final String DEFAULT_EVENT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_EVENT_NAME = "BBBBBBBBBB";
 
-    private static final UUID DEFAULT_FLOW_ID = UUID.randomUUID();
-    private static final UUID UPDATED_FLOW_ID = UUID.randomUUID();
-
     private static final Instant DEFAULT_TRANSACTION_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_TRANSACTION_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
@@ -91,7 +88,6 @@ public class FlowEventDetailsResourceIT {
         FlowEventDetails flowEventDetails = new FlowEventDetails()
             .eventId(DEFAULT_EVENT_ID)
             .eventName(DEFAULT_EVENT_NAME)
-            .flowId(DEFAULT_FLOW_ID)
             .transactionDate(DEFAULT_TRANSACTION_DATE)
             .parameters(DEFAULT_PARAMETERS)
             .status(DEFAULT_STATUS)
@@ -120,7 +116,6 @@ public class FlowEventDetailsResourceIT {
         FlowEventDetails flowEventDetails = new FlowEventDetails()
             .eventId(UPDATED_EVENT_ID)
             .eventName(UPDATED_EVENT_NAME)
-            .flowId(UPDATED_FLOW_ID)
             .transactionDate(UPDATED_TRANSACTION_DATE)
             .parameters(UPDATED_PARAMETERS)
             .status(UPDATED_STATUS)
@@ -163,7 +158,6 @@ public class FlowEventDetailsResourceIT {
         FlowEventDetails testFlowEventDetails = flowEventDetailsList.get(flowEventDetailsList.size() - 1);
         assertThat(testFlowEventDetails.getEventId()).isEqualTo(DEFAULT_EVENT_ID);
         assertThat(testFlowEventDetails.getEventName()).isEqualTo(DEFAULT_EVENT_NAME);
-        assertThat(testFlowEventDetails.getFlowId()).isEqualTo(DEFAULT_FLOW_ID);
         assertThat(testFlowEventDetails.getTransactionDate()).isEqualTo(DEFAULT_TRANSACTION_DATE);
         assertThat(testFlowEventDetails.getParameters()).isEqualTo(DEFAULT_PARAMETERS);
         assertThat(testFlowEventDetails.getStatus()).isEqualTo(DEFAULT_STATUS);
@@ -218,25 +212,6 @@ public class FlowEventDetailsResourceIT {
         int databaseSizeBeforeTest = flowEventDetailsRepository.findAll().size();
         // set the field null
         flowEventDetails.setEventName(null);
-
-        // Create the FlowEventDetails, which fails.
-        FlowEventDetailsDTO flowEventDetailsDTO = flowEventDetailsMapper.toDto(flowEventDetails);
-
-        restFlowEventDetailsMockMvc.perform(post("/api/flow-event-details")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(flowEventDetailsDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<FlowEventDetails> flowEventDetailsList = flowEventDetailsRepository.findAll();
-        assertThat(flowEventDetailsList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkFlowIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = flowEventDetailsRepository.findAll().size();
-        // set the field null
-        flowEventDetails.setFlowId(null);
 
         // Create the FlowEventDetails, which fails.
         FlowEventDetailsDTO flowEventDetailsDTO = flowEventDetailsMapper.toDto(flowEventDetails);
@@ -377,7 +352,6 @@ public class FlowEventDetailsResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(flowEventDetails.getId().intValue())))
             .andExpect(jsonPath("$.[*].eventId").value(hasItem(DEFAULT_EVENT_ID.toString())))
             .andExpect(jsonPath("$.[*].eventName").value(hasItem(DEFAULT_EVENT_NAME)))
-            .andExpect(jsonPath("$.[*].flowId").value(hasItem(DEFAULT_FLOW_ID.toString())))
             .andExpect(jsonPath("$.[*].transactionDate").value(hasItem(DEFAULT_TRANSACTION_DATE.toString())))
             .andExpect(jsonPath("$.[*].parameters").value(hasItem(DEFAULT_PARAMETERS)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
@@ -399,7 +373,6 @@ public class FlowEventDetailsResourceIT {
             .andExpect(jsonPath("$.id").value(flowEventDetails.getId().intValue()))
             .andExpect(jsonPath("$.eventId").value(DEFAULT_EVENT_ID.toString()))
             .andExpect(jsonPath("$.eventName").value(DEFAULT_EVENT_NAME))
-            .andExpect(jsonPath("$.flowId").value(DEFAULT_FLOW_ID.toString()))
             .andExpect(jsonPath("$.transactionDate").value(DEFAULT_TRANSACTION_DATE.toString()))
             .andExpect(jsonPath("$.parameters").value(DEFAULT_PARAMETERS))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
@@ -431,7 +404,6 @@ public class FlowEventDetailsResourceIT {
         updatedFlowEventDetails
             .eventId(UPDATED_EVENT_ID)
             .eventName(UPDATED_EVENT_NAME)
-            .flowId(UPDATED_FLOW_ID)
             .transactionDate(UPDATED_TRANSACTION_DATE)
             .parameters(UPDATED_PARAMETERS)
             .status(UPDATED_STATUS)
@@ -451,7 +423,6 @@ public class FlowEventDetailsResourceIT {
         FlowEventDetails testFlowEventDetails = flowEventDetailsList.get(flowEventDetailsList.size() - 1);
         assertThat(testFlowEventDetails.getEventId()).isEqualTo(UPDATED_EVENT_ID);
         assertThat(testFlowEventDetails.getEventName()).isEqualTo(UPDATED_EVENT_NAME);
-        assertThat(testFlowEventDetails.getFlowId()).isEqualTo(UPDATED_FLOW_ID);
         assertThat(testFlowEventDetails.getTransactionDate()).isEqualTo(UPDATED_TRANSACTION_DATE);
         assertThat(testFlowEventDetails.getParameters()).isEqualTo(UPDATED_PARAMETERS);
         assertThat(testFlowEventDetails.getStatus()).isEqualTo(UPDATED_STATUS);

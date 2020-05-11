@@ -21,9 +21,6 @@
             <column name="event_name" type="varchar(100)">
                 <constraints nullable="false" />
             </column>
-            <column name="flow_id" type="${uuidType}">
-                <constraints nullable="false" />
-            </column>
             <column name="transaction_date" type="datetime">
                 <constraints nullable="false" />
             </column>
@@ -71,7 +68,6 @@
             <column name="id" type="numeric"/>
             <column name="event_id" type="${uuidType}"/>
             <column name="event_name" type="string"/>
-            <column name="flow_id" type="${uuidType}"/>
             <column name="transaction_date" type="datetime"/>
             <column name="parameters" type="string"/>
             <column name="status" type="string"/>

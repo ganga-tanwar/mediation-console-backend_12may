@@ -2,20 +2,6 @@
     "name": "MediationUserRoleMappings",
     "fields": [
         {
-            "fieldName": "mediationUserId",
-            "fieldType": "UUID",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "mediationRoleId",
-            "fieldType": "UUID",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "createdBy",
             "fieldType": "String",
             "fieldValidateRules": [

@@ -18,13 +18,6 @@
             "fieldValidateRulesMaxlength": "100"
         },
         {
-            "fieldName": "flowId",
-            "fieldType": "UUID",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "transactionDate",
             "fieldType": "Instant",
             "fieldValidateRules": [
