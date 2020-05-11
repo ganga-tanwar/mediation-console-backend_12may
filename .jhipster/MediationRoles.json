@@ -1,0 +1,43 @@
+{
+    "name": "MediationRoles",
+    "fields": [
+        {
+            "fieldName": "mediationRoleId",
+            "fieldType": "UUID",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "roleName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "100"
+        },
+        {
+            "fieldName": "roleDescription",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "100"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20200511160000",
+    "javadoc": "Class representing Roles",
+    "entityTableName": "mediation_roles",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "MediationConsole",
+    "applications": "*",
+    "microserviceName": "MediationConsole"
+}
